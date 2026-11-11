@@ -1,0 +1,3 @@
+I discussed with Ananya (CS24B066) about what symlinks are, how they are implemented, and how we would iteratively follow them.
+I read the xv6 book to understand the theory of filesystems, mainly how they are organized and what is the purpose of the abstractions of files, inodes, blocks, etc.
+I used ChatGPT to figure out how to handle relative paths, and got the idea to use the namei() function which can handle .. in the pathname iteratively.

@@ -1,0 +1,1 @@
+I referred to the xv6 book for the specifics of the system calls fork() and exec(), and especially the directory structure and parsing, which I was not able to understand from the ls.c file.

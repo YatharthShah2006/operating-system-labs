@@ -1,0 +1,38 @@
+# xv6 generated files
+*.o
+*.d
+*.asm
+*.sym
+
+# Generated filesystem image
+fs.img
+fs.img.bk
+
+# Generated kernel/user binaries
+kernel/kernel
+mkfs/mkfs
+user/_*
+
+# Generated documentation
+*.aux
+*.dvi
+*.idx
+*.ilg
+*.ind
+*.log
+*.out
+*.toc
+
+# Submission archive
+lab.zip
+
+# macOS
+.DS_Store
+
+# Generated xv6 system call assembly
+user/usys.S
+
+# Grader outputs
+__pycache__/
+autograder_results/
+grade-results.json

@@ -1,0 +1,15 @@
+1. usertrap()
+
+2. 15. It represents the system call number for SYS_open.
+
+3. User mode.
+
+5.
+num = *(int *) 0;
+  80001cbc:	00002683          	lw	a3,0(zero) # 0 <_entry-0x80000000>
+
+The register corresponding to num is a3.
+
+7. The kernel crashes because the user program tries to access the memory address (virtual) 0, which is not mapped to any physical address. This leads to a page fault, which is confirmed by the corresponding values of scause and stval.
+
+8. pid = 1, process = init

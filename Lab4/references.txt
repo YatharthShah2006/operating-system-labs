@@ -1,0 +1,4 @@
+Most of the references were taken from the xv6-book.
+
+Some discussion was done with Ananya (CS24B066) regarding questions 5 and 6, mostly regarding the understand of what was expected to be done by us, as we both thought the description and given code were vague.
+Some discussion was done with Samarth (CS24B085) regarding the implementation of uvmalloc(), uvmcopy(), uvmunmap()

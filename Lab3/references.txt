@@ -1,0 +1,1 @@
+No external references used. Only the xv6 book.

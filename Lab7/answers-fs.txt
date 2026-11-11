@@ -1,0 +1,44 @@
+Section 2
+Q1. size 200000 - defined in param.h
+    nblocks 199328 - it's equal to total number of blocks minus the metadata blocks
+    ninodes 200 - defined in mkfs.c
+    nlog 241 - logblocks is defined as maxopblocks*3 in param.h, nlog is defined as logblocks + 1 in mkfs.c
+    logstart 2 - block 0 is boot and block 1 is superblock so it gets the next block
+    inodestart 243 - nlog blocks from logstart contain logs, so this gets the next one
+    bmapstart 256 - inodes per block is BSIZE / size of inode, and this gets the next block after the inode blocks
+    refstart 281 - similarly, bitmaps per block is BSIZE * 8, and this gets the next block
+
+    Kernel uses the start numbers whenever it wants to access a data/inode/log/bmap block. It also uses size to look for empty blocks in balloc() function.
+
+    The kernel reads it in the fsinit() function into a struct superblock using readsb().
+
+Q2. Each data block can contain upto BSIZE (= 1024) bytes of data, so number of blocks for a file = ceil(size / BSIZE).
+
+    In a large file, the last inode entry is an indirect block pointer, so if it is non-zero, we need to visit it to check how many data blocks are used, rather than just counting it as one block.
+
+    A newly allocated block using balloc() is zeroed out using bzero() before returning.
+
+    No, if the offset and are more than the file size, the iread() function changes the n to read only upto the size.
+
+Q3. Block 674. Bytes 0-1023 are in data block 0, and bytes 1024-2047 are in data block 1, which resides in disk block 674.
+
+
+    In the starter layout, the max number of blocks for a file is 268, and offset 300000 would be in block 292.
+
+    After section 4, the offset can be found from the double-indirect entry of the inode, in the first entry of that block, and the 25th entry in that block.
+
+Q4. 268 blocks, 274432 bytes
+
+Q5. The last entry points to a block which in turn contains 256 more data block entries.
+
+    A file's data blocks need not be contiguous because they are accessed via pointers hence there is no need for contiguity. Also, it's not necessary that all the blocks are allocated at once, later blocks are allocated as and when needed.
+
+Section 4
+Q1. total allocated blocks = 65803 + 258, so the fraction will be 258 / 66061 = 0.39%
+
+Q2. number of block pointer entries per block = 1024, so total data blocks will be 1024 * 1024 + 1024 + 11 = 1049611. total pointer blocks = 1026. Hence fraction is 1026 / 1050637 = 0.098%
+
+Section 5
+Q1. If a symlink points to itself, then looking it up while already holding the lock to the file will lead to a deadlock. I unlock the inode before looking up the file with the new name.
+
+Q2. If the target is not an absolute path, I find the offset of the current pathname where the parent path ends, and append the target to it. Then, namei() does the actual looking up.

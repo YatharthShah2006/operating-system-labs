@@ -1,0 +1,16 @@
+Initially I had implemented the rwlock acquire as:
+    while(1) {
+        acquire(guard)
+        if(condition) {take_lock}
+        release(guard)
+    }
+
+But I was faced with the issue that if a release function is starved and the guard is stuck with acquire functions, then it would lead to an issue similar to a deadlock. I asked claude for how to solve it and it gave me the idea of using a test-and-test-and-set mechanic, to be implemented like
+    while(1) {
+        while(condition) spin
+        acquire(guard)
+        if(condition) {take_lock}
+        release(guard)
+    }
+
+Apart from that, everything else was done by me with no other references consulted.
